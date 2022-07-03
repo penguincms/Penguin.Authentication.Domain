@@ -1,3 +1,7 @@
 [submodule "Penguin.Projects.Shared"]
 	path = Penguin.Projects.Shared
+<<<<<<< HEAD
 	url = https://github.com/PenguinCMS/Penguin.Projects.Shared
+=======
+	url = https://github.com/PenguinCms/Penguin.Projects.Shared
+>>>>>>> 1feb69b4d266cd8b1896b66db5bdbe9f02988269
