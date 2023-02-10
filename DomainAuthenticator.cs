@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using DDomain = System.DirectoryServices.ActiveDirectory.Domain;
-using System.DirectoryServices.AccountManagement;
-using System.Linq;
-using System.Text;
 using System.Diagnostics;
+using System.DirectoryServices.AccountManagement;
+using DDomain = System.DirectoryServices.ActiveDirectory.Domain;
 
 namespace Penguin.Authentication.Domain
 {
@@ -18,7 +15,7 @@ namespace Penguin.Authentication.Domain
         {
             get
             {
-                if(activeDirectoryDomain is null)
+                if (activeDirectoryDomain is null)
                 {
                     activeDirectoryDomain = string.Empty;
 
@@ -26,8 +23,8 @@ namespace Penguin.Authentication.Domain
                     {
                         DDomain ddomain = DDomain.GetComputerDomain();
                         activeDirectoryDomain = ddomain.Name;
-
-                    }catch(Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         Debug.WriteLine(ex.Message);
                     }
@@ -41,7 +38,7 @@ namespace Penguin.Authentication.Domain
 
         public DomainAuthenticator(string domain = null)
         {
-            domain = domain ?? ActiveDirectoryDomain;
+            domain ??= ActiveDirectoryDomain;
 
             if (!domain.Contains('.'))
             {
@@ -59,12 +56,9 @@ namespace Penguin.Authentication.Domain
 
         public bool Authenticate(string userName, string password)
         {
-            using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, Domain))
-            {
-                // validate the credentials
-                return pc.ValidateCredentials(userName, password);
-            }
+            using PrincipalContext pc = new(ContextType.Domain, Domain);
+            // validate the credentials
+            return pc.ValidateCredentials(userName, password);
         }
-
     }
 }
