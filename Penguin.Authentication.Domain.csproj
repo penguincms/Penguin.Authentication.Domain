@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;net7.0</TargetFrameworks>
     <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
-    <PackageProjectUrl>https://github.com/PenguinCMS/Penguin.Authentication.Domain</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/PenguinCms/Penguin.Authentication.Domain</PackageProjectUrl>
     <DocumentationFile>Penguin.Authentication.Domain.xml</DocumentationFile>
     <Version>5.0.5</Version>
     <AssemblyName>Penguin.Authentication.Domain</AssemblyName>
@@ -12,7 +12,7 @@
   </PropertyGroup>
   <Import Project="Penguin.Projects.Shared\Penguin.Projects.Shared.csproj" />
   <ItemGroup>
-    <PackageReference Include="System.DirectoryServices" Version="5.0.0" />
-    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="5.0.0" />
+    <PackageReference Include="System.DirectoryServices" Version="7.0.1" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="7.0.0" />
   </ItemGroup>
 </Project>
