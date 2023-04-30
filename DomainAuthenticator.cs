@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Penguin.Authentication.Abstractions;
+using Penguin.Authentication.Abstractions.Interfaces;
+using System;
 using System.Diagnostics;
 using System.DirectoryServices.AccountManagement;
+using System.Net;
+using System.Threading.Tasks;
 using DDomain = System.DirectoryServices.ActiveDirectory.Domain;
 
 namespace Penguin.Authentication.Domain
 {
-    public class DomainAuthenticator
+    public class DomainAuthenticator : IAuthenticator
     {
-        public string FullDomain { get; private set; }
-
-        public string Domain { get; private set; }
-
         public static string ActiveDirectoryDomain
         {
             get
@@ -36,29 +36,38 @@ namespace Penguin.Authentication.Domain
 
         private static string activeDirectoryDomain;
 
-        public DomainAuthenticator(string domain = null)
+        public Task<AuthenticationResult> Authenticate(string username, string password, string domain = null)
         {
             domain ??= ActiveDirectoryDomain;
 
-            if (!domain.Contains('.'))
-            {
-                Domain = domain;
+			if (!domain.Contains('.'))
+			{
+				domain = domain.Split('.')[0];
+			}
 
-                FullDomain = $"{domain}.local";
-            }
-            else
-            {
-                FullDomain = domain;
+			using PrincipalContext pc = new(ContextType.Domain, domain);
 
-                Domain = domain.Split('.')[0];
-            }
-        }
-
-        public bool Authenticate(string userName, string password)
-        {
-            using PrincipalContext pc = new(ContextType.Domain, Domain);
             // validate the credentials
-            return pc.ValidateCredentials(userName, password);
+            return Task.FromResult(new AuthenticationResult()
+            {
+                IsValid = pc.ValidateCredentials(username, password)
+            });
         }
+
+	}
+}
+
+#if NET48
+public static class StringExtensions
+{
+    public static bool Contains(this string s, char value)
+    {
+		if (s is null)
+		{
+			throw new ArgumentNullException(nameof(s));
+		}
+
+		return s.Contains($"{value}");
     }
 }
+#endif

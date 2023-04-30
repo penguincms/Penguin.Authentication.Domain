@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;net7.0</TargetFrameworks>
+    <TargetFrameworks>net48;netcoreapp3.1;net7.0;</TargetFrameworks>
     <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
     <PackageProjectUrl>https://github.com/PenguinCMS/Penguin.Authentication.Domain</PackageProjectUrl>
     <DocumentationFile>Penguin.Authentication.Domain.xml</DocumentationFile>
@@ -14,5 +14,8 @@
   <ItemGroup>
     <PackageReference Include="System.DirectoryServices" Version="7.0.1" />
     <PackageReference Include="System.DirectoryServices.AccountManagement" Version="7.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Penguin.Authentication.Abstractions\Penguin.Authentication.Abstractions.Local.csproj" />
   </ItemGroup>
 </Project>
