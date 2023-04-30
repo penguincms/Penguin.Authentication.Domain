@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net48;netcoreapp3.1;net7.0;</TargetFrameworks>
     <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
@@ -12,8 +12,7 @@
   </PropertyGroup>
   <Import Project="Penguin.Projects.Shared\Penguin.Projects.Shared.csproj" />
   <ItemGroup>
-    <PackageReference Include="System.DirectoryServices" Version="7.0.1" />
-    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="7.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Penguin.Authentication.Abstractions\Penguin.Authentication.Abstractions.Local.csproj" />
