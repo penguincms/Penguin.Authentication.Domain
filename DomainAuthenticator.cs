@@ -1,9 +1,8 @@
-﻿using Penguin.Authentication.Abstractions;
+﻿using Novell.Directory.Ldap;
+using Penguin.Authentication.Abstractions;
 using Penguin.Authentication.Abstractions.Interfaces;
 using System;
 using System.Diagnostics;
-using System.DirectoryServices.AccountManagement;
-using System.Net;
 using System.Threading.Tasks;
 using DDomain = System.DirectoryServices.ActiveDirectory.Domain;
 
@@ -40,21 +39,30 @@ namespace Penguin.Authentication.Domain
         {
             domain ??= ActiveDirectoryDomain;
 
-			if (!domain.Contains('.'))
-			{
-				domain = domain.Split('.')[0];
-			}
-
-			using PrincipalContext pc = new(ContextType.Domain, domain);
-
-            // validate the credentials
-            return Task.FromResult(new AuthenticationResult()
+            try
             {
-                IsValid = pc.ValidateCredentials(username, password)
-            });
+                using LdapConnection cn = new();
+
+                cn.Connect(domain, 389);
+
+                cn.Bind($"{domain.Split('.')[0]}\\{username}", password);
+
+                return Task.FromResult(new AuthenticationResult()
+                {
+                    IsValid = true
+                });
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(new AuthenticationResult()
+                {
+                    IsValid = false,
+                    Exception = ex
+                });
+            }
         }
 
-	}
+    }
 }
 
 #if NET48
